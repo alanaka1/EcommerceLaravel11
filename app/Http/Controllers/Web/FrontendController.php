@@ -10,6 +10,6 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        return View('Ecommerce.Web.Template.layouts.index');
+        return View('Ecommerce.Web.Template.index');
     }
 }
