@@ -22,13 +22,13 @@
             <div class="mb-3">
                 <!-- <label class="form-label">البريد الإلكتروني</label> -->
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="example@email.com">
+                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="example@email.com">
             </div>
 
             <div class="mb-3">
                 <!-- <label class="form-label">كلمة المرور</label> -->
                 <label class="form-label">Password</label>
-                <input type="password" class="form-control" name="password" placeholder="********">
+                <input type="password" class="form-control" id="password" name="password" placeholder="********">
             </div>
 
             <div class="d-flex justify-content-between mb-3">
@@ -41,9 +41,7 @@
                 <a href="#" class="small">Forgot your password?</a>
             </div>
 
-            <button class="btn btn-primary w-100">
-                Login
-            </button>
+            <button type="submit" class="btn btn-primary w-100 btnLogin">Login</button>
         </form>
 
         <p class="text-center mt-3 small">
@@ -57,5 +55,30 @@
 @endsection
  
 @section('javascript')
+
+<script>
+    
+
+    $(document).ready(function(){
+
+        $('.btnLogin').click(function(e){
+
+            e.preventDefault();
+            let email = $('#email').val();
+            let password = $('#password').val();
+
+            if (email == '' || password == ''){
+                
+                Swal.fire({
+                    title: "Error",
+                    text: "Please Enter Your Email or Password",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            }
+        })
+    });
+
+</script>
 
 @endsection
