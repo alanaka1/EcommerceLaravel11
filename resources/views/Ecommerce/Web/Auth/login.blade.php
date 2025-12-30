@@ -75,6 +75,23 @@
                     icon: "error",
                     confirmButtonText: "OK",
                 });
+            } else {
+                $.ajax({
+                    method: 'post',
+                    url: '/user/login',
+                    data: {
+                        email: email,
+                        password: password,
+                    },
+
+                    headers: {
+                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                    },
+
+                    success: function(response) {
+                        console.log(response)
+                    }
+                })
             }
         })
     });

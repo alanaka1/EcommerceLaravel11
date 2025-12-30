@@ -17,4 +17,17 @@ class FrontendController extends Controller
         // $permission = Permission::create(['name' => 'user']);
         return View('Ecommerce.Web.Template.index');
     }
+
+    public function user_login(Request $request)
+    {
+        $methon = $request->method();
+        
+        if ($request->isMethod('post')) {
+            
+            return response()->json($request->all());
+        
+        }else{
+            return redirect()->route('home');
+        }
+    }
 }
