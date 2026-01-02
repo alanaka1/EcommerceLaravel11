@@ -89,7 +89,25 @@
                     },
 
                     success: function(response) {
-                        console.log(response)
+                        
+                        if (response.data == 0) {
+                            
+                            Swal.fire({
+                                title: "Error",
+                                text: "Email or Password Wrong",
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            })
+
+                        } else if (response.data == 1) {
+                            
+                            window.location.href = '/dashboard';
+                        
+                        }else if (response.data == 2) {
+                            
+                            window.location.href = '/';
+                        }
+                        // console.log(response)
                     }
                 })
             }
