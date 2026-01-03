@@ -1,0 +1,34 @@
+*{
+  direction: rtl;
+}
+.dashboard-main{
+  padding-right: 200px;
+}
+.dashboard-main.active{
+  padding-right: 0;
+}
+.top-bar-menu .count{
+  left: 0;
+}
+
+.data-table .dataTables_wrapper .dataTables_filter{
+  text-align: left;
+}
+
+@media screen and (max-width: 992px) {
+  .dashboard-main{
+    padding-right: 0;
+  }
+  .dashboard-main.active{
+    padding-right: 200px;
+  }
+  .top-bar-menu .count{
+    right: auto;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .dashboard-main.active{
+    padding-right: 0;
+  }
+}

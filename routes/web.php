@@ -3,19 +3,27 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\FrontendController;
+use App\Http\Controllers\Backend\BackendController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-Route::controller(FrontendController::class)->group(function () {
+Route::group(['controller' => FrontendController::class], function() {
     Route::get('/', 'home')->name('home');
     Route::any('/user/login', 'user_login')->name('user.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::group([/*'prefix' => 'admin',*/ 'as' => 'admin.', 'controller' => BackendController::class, 'middleware' => ['auth', 'verified', 'role:admin']], function() {
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+});
+
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

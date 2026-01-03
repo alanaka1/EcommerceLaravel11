@@ -1,0 +1,30 @@
+*{
+  direction: ltr;
+}
+.dashboard-main{
+  padding-left: 200px;
+}
+.dashboard-main.active{
+  padding-left: 0;
+}
+.top-bar-menu .count{
+  right: 0;
+}
+
+@media screen and (max-width: 992px) {
+  .dashboard-main{
+    padding-left: 0;
+  }
+  .dashboard-main.active{
+    padding-left: 200px;
+  }
+  .top-bar-menu .count{
+    right: auto;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .dashboard-main.active{
+    padding-left: 0;
+  }
+}
