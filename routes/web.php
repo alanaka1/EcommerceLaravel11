@@ -15,8 +15,9 @@ Route::group(['controller' => FrontendController::class], function() {
 });
 
 
-Route::group([/*'prefix' => 'admin',*/ 'as' => 'admin.', 'controller' => BackendController::class, 'middleware' => ['auth', 'verified', 'role:admin']], function() {
+Route::group([/*'prefix' => 'admin', 'as' => 'admin.',*/ 'controller' => BackendController::class, 'middleware' => ['auth', 'verified', 'role:admin']], function() {
     Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/user_logout', 'user_logout')->name('user.logout');
 });
 
 
