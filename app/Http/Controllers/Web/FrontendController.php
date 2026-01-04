@@ -70,6 +70,39 @@ class FrontendController extends Controller
         }
     }
 
+    public function newAccount(Request $request)
+    {
+        if ($request->isMethod('post')) {
+
+            $check = User::where('email', '=', $request->email)->first();
+
+            if (isset($check)) {
+                
+                return response()->json(['data' => 0]);
+
+            }else{
+                
+                $user = new User;
+                $user->name = strip_tags($request->name);
+                $user->password = Hash::make($request->password);
+                $user->email = strip_tags($request->email);
+                $user->created_at = Carbon::now();
+                $user->save();
+        
+                $user->assignRole('user');
+                // return response()->json(['data' => $request->all()]);
+                return response()->json(['data' => 1]);
+
+            }
+
+
+        }else{
+
+            return redirect()->route('home');
+        }
+
+    }
+
     // حل تشات جي بي تي
 
     //     public function user_login(Request $request)

@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\BackendController;
 Route::group(['controller' => FrontendController::class], function() {
     Route::get('/', 'home')->name('home');
     Route::any('/user/login', 'user_login')->name('user.login');
+    Route::any('/new-account', 'newAccount')->name('user.login');
 });
 
 
