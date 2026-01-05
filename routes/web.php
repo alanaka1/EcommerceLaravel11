@@ -13,13 +13,20 @@ Route::group(['controller' => FrontendController::class], function() {
     Route::get('/', 'home')->name('home');
     Route::any('/user/login', 'user_login')->name('user.login');
     Route::any('/new-account', 'newAccount')->name('user.login');
+    Route::get('/user/forget_password', 'user_forget_password')->name('user.forget.password');
+    Route::any('/user/reset_password', 'user_reset_password')->name('user.reset.password');
+
+    Route::group(['middleware' => ['auth', 'verified', 'role:user']], function() {
+        Route::get('/user_logout', 'user_logout')->name('user.logout');
+    });
 });
 
 
 Route::group([/*'prefix' => 'admin', 'as' => 'admin.',*/ 'controller' => BackendController::class, 'middleware' => ['auth', 'verified', 'role:admin']], function() {
     Route::get('/dashboard', 'dashboard')->name('dashboard');
-    Route::get('/user_logout', 'user_logout')->name('user.logout');
+    Route::get('/admin_logout', 'admin_logout')->name('admin.logout');
 });
+
 
 
 

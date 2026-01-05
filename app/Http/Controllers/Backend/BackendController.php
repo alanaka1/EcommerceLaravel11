@@ -13,7 +13,7 @@ class BackendController extends Controller
         return view('Ecommerce.Backend.index');
     }
 
-    public function user_logout()
+    public function admin_logout()
     {
         Auth::logout();
         Session::flush();

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\{Role};
 use Spatie\Permission\Models\{Permission};
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\{Auth, Hash};
+use Illuminate\Support\Facades\{Auth, Hash, Session};
 use Carbon\Carbon;
 
 class FrontendController extends Controller
@@ -102,6 +102,30 @@ class FrontendController extends Controller
         }
 
     }
+
+    public function user_forget_password()
+    {
+        return view('Ecommerce.Web.Auth.forget_password');
+    }
+
+    public function user_reset_password(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            return response()->json(['data' => $request->all()]);
+        }else{
+
+            return redirect()->route('home');
+        }
+    }
+
+    public function user_logout()
+    {
+        Auth::logout();
+        Session::flush();
+
+        return redirect(route('home'));
+    }
+    
 
     // حل تشات جي بي تي
 
