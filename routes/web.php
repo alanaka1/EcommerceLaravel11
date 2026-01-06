@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\FrontendController;
 use App\Http\Controllers\Backend\BackendController;
+use Spatie\Permission\Models\Role;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -15,6 +16,7 @@ Route::group(['controller' => FrontendController::class], function() {
     Route::any('/new-account', 'newAccount')->name('user.login');
     Route::get('/user/forget_password', 'user_forget_password')->name('user.forget.password');
     Route::any('/user/reset_password', 'user_reset_password')->name('user.reset.password');
+    Route::get('/user/update_password/{id}', 'user_update_password')->name('user.update.password');
 
     Route::group(['middleware' => ['auth', 'verified', 'role:user']], function() {
         Route::get('/user_logout', 'user_logout')->name('user.logout');

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\{Role};
-use Spatie\Permission\Models\{Permission};
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\{Auth, Hash, Session};
-use Carbon\Carbon;
+use App\Mail\ForgetPassword;
+use Spatie\Permission\Models\{Role, Permission};
+use Illuminate\Support\Facades\{Auth, Hash, Session, Mail};
+use Illuminate\Mail\Mailables\{Address, Envelope};
 
 class FrontendController extends Controller
 {
@@ -111,7 +112,20 @@ class FrontendController extends Controller
     public function user_reset_password(Request $request)
     {
         if ($request->isMethod('post')) {
-            return response()->json(['data' => $request->all()]);
+
+            $check = User::where('email', '=', $request->email)->first();
+
+            if (isset($check)) {
+                
+                Mail::to ($check->email)->send(new ForgetPassword(route('user.update.password', ['id' => $check->id])));
+
+            }else{
+
+                return response()->json(['data' => 0]);
+
+            }
+
+                // return response()->json(['data' => $request->all()]);
         }else{
 
             return redirect()->route('home');
@@ -124,6 +138,12 @@ class FrontendController extends Controller
         Session::flush();
 
         return redirect(route('home'));
+    }
+
+    public function user_update_password($id)
+    {
+        $userID = $id;
+        return view('Ecommerce.Web.Auth.update_password', compact('userID'));
     }
     
 
