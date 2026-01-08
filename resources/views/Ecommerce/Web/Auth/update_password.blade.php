@@ -1,6 +1,6 @@
 @extends('Ecommerce.Web.Auth.layout.index')
     
-@section('title', 'Reset Password')
+@section('title', 'Update Password')
 
 @section('css')
 
@@ -21,11 +21,17 @@
         @csrf
             <div class="mb-3">
                 <!-- <label class="form-label">البريد الإلكتروني</label> -->
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="example@email.com">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password">
             </div>
+            <div class="mb-3">
+                <!-- <label class="form-label">البريد الإلكتروني</label> -->
+                <label class="form-label">Password Again</label>
+                <input type="password" class="form-control" id="repassword" name="password" placeholder="Enter New Password Again">
+            </div>
+            <input type="hidden" name="userID" id="userID" value="{{ $user->id }}">
 
-            <button type="submit" class="btn btn-primary w-100 btnResetPassword">Reset Password</button>
+            <button type="submit" class="btn btn-primary w-100 btnUpdatePassword">Update Password</button>
         </form>
 
         <p class="text-center mt-3 small">
@@ -45,52 +51,80 @@
 
     $(document).ready(function(){
 
-        $('.btnResetPassword').click(function(e){
+        $('.btnUpdatePassword').click(function(e){
 
             e.preventDefault();
-            let email = $('#email').val();
+            let password = $('#password').val();
+            let password2 = $('#repassword').val();
+            let userID = $('#userID').val();
 
-            if (email == ''){
+            if (password == ''){
                 
                 Swal.fire({
                     title: "Error",
-                    text: "Please Enter Your Email",
+                    text: "Please Enter Your Password For Your Account",
                     icon: "error",
                     confirmButtonText: "OK",
                 });
-            } else {
+
+            } else if(password2 == '') {
+
+                Swal.fire({
+                    title: "Error",
+                    text: "Please Enter Your Password Again For Your Account",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+
+            }else if(password != password2) {
+
+                Swal.fire({
+                    title: "Error",
+                    text: "Sorry Password Not Match",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+
+            }else {
                 $.ajax({
                     method: 'post',
-                    url: '/user/reset_password',
+                    url: "/user/updated_password",
                     data: {
-                        email: email,
+                        userID: userID,
+                        password: password,
                     },
 
                     headers: {
                         'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                     },
 
-                    success: function(response) {
-                        
-                        if (response.data == 0) {
-                            Swal.fire({
-                                title: "Error",
-                                text: "Wrong Email",
-                                icon: "error",
-                                confirmButtonText: "OK"
-                            });
-                            } else {
+                    success: function (response) {
+
+                        //  console.log(response); // 👈 ضروري جداً
+
+                       if (response.data == 1) {
+
                             Swal.fire({
                                 title: "Success",
-                                text: "Reset Password Link Sent To Your Email",
+                                text: "Your Password is Updated",
                                 icon: "success",
-                                confirmButtonText: "OK"
+                                confirmButtonText: "OK",
+                            }).then(() => {
+                                window.location.href = '/login';
                             });
 
-                            }
-
-                            console.log(response);
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                text: "Something went wrong",
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            });
                         }
+                        
+                    }
+                    // console.log(response);
+
                 })
             }
         })

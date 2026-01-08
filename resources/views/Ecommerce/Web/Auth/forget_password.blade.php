@@ -45,7 +45,7 @@
 
     $(document).ready(function(){
 
-        $('.btnResetPassword').click(function(e){
+        $('.btnResetPassword').one('click', function(e){
 
             e.preventDefault();
             let email = $('#email').val();
@@ -61,7 +61,7 @@
             } else {
                 $.ajax({
                     method: 'post',
-                    url: '/user/reset_password',
+                    url: "{{ route('user.reset.password') }}",
                     data: {
                         email: email,
                     },

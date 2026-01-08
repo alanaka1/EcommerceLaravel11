@@ -132,6 +132,19 @@ class FrontendController extends Controller
         }
     }
 
+    public function user_updated_password(Request $request)
+    {
+        $updated = User::where('id', $request->userID)->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        if ($updated) {
+            return response()->json(['data' => 1]);
+        } else {
+            return response()->json(['data' => 0]);
+        }
+    }
+
     public function user_logout()
     {
         Auth::logout();
@@ -142,8 +155,9 @@ class FrontendController extends Controller
 
     public function user_update_password($id)
     {
-        $userID = $id;
-        return view('Ecommerce.Web.Auth.update_password', compact('userID'));
+        // $userID = $id;
+        $user = User::findOrFail($id);
+        return view('Ecommerce.Web.Auth.update_password', compact('user'));
     }
     
 
