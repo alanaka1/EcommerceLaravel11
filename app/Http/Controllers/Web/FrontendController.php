@@ -145,6 +145,42 @@ class FrontendController extends Controller
         }
     }
 
+    public function error_403() {
+        if (Auth::check()) {
+            
+            if (Auth::user()->hasRole('admin')) {
+
+                return redirect(route('dashboard'));
+
+            }elseif (Auth::user()->hasRole('user')) {
+
+                return redirect(route('home'));
+            }
+
+        } else {
+
+                return redirect(route('home'));
+        }
+    }
+
+    public function error_404() {
+        if (Auth::check()) {
+            
+            if (Auth::user()->hasRole('admin')) {
+
+                return redirect(route('dashboard'));
+
+            }elseif (Auth::user()->hasRole('user')) {
+
+                return redirect(route('home'));
+            }
+
+        } else {
+            
+                return redirect(route('home'));
+        }
+    }
+
     public function user_logout()
     {
         Auth::logout();

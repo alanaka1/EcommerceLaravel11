@@ -19,6 +19,9 @@ Route::group(['controller' => FrontendController::class], function() {
     Route::get('/user/update_password/{id}', 'user_update_password')->name('user.update.password');
     Route::any('/user/updated_password', 'user_updated_password')->name('user.updated.password');
 
+    Route::get('error-403', 'error_403')->name('error.403s');
+    Route::get('error-404', 'error_404')->name('error.404s');
+
     Route::group(['middleware' => ['auth', 'verified', 'role:user']], function() {
         Route::get('/user_logout', 'user_logout')->name('user.logout');
     });
