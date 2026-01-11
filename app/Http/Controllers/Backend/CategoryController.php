@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('Ecommerce.Backend.Category.index');
+        $categories = Category::get();
+        return view('Ecommerce.Backend.Category.index', compact('categories'));
     }
 
     /**
@@ -29,7 +31,33 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->isMethod('post')) {
+
+            $check = Category::where('name', '=', $request->name)->first();
+
+            if (isset($check)) {
+                
+                return response()->json(['data' => 0]);
+            
+            } else {
+
+                $category = Category::create([
+
+                    'name'          => $request->name,
+                    'order'         => $request->order,
+
+                ]);
+
+                return response()->json(['data' => 1]);
+
+            }
+        
+        }else {
+
+            return redirect()->route('home');
+
+        }
+        return response()->json(['data' => $request->all()]);
     }
 
     /**

@@ -19,10 +19,10 @@
     </div>
 
     <div class="addPost m-3">
-        <a href="{{ route('admin.category.create') }}" class="btn btn-outline-primary btn-sm" title="Add"><i class="fa-solid fa-circle-plus"></i></a>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-primary btn-sm" title="Back"><i class="fa-solid fa-angles-left"></i></a>
     </div>
 
-    <form action="" method="post">
+    <!-- <form action="" method="post"> -->
 
         <div class="row row-cols-1 row-cols-md-2 g-4 mb-3">
     
@@ -45,7 +45,7 @@
             <button type="submit" id="newCategory" class="btn btn-outline-primary">Category</button>
         </div>
 
-    </form>
+    <!-- </form> -->
 
 
 @endsection
@@ -72,7 +72,54 @@
 
             } else {
 
-            
+                $.ajax({
+
+                    method: 'post',
+                    url: "{{ route('admin.category.store') }}",
+                    data: {
+                        name: name,
+                        order: order,
+                    },
+
+                    headers: {
+
+                        'X-CSRF-TOKEN': $('meta[name= "csrf-token"]').attr('content')
+                    },
+
+                    success: function(response) {
+
+                        if (response.data == 0) {
+                        
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'This Category Already Exists',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+
+                        } else {
+
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Category Added Success',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+
+                                if (result.isConfirmed) {
+                                    
+                                    // window.location.reload();
+                                    window.location.href = "{{ route('admin.category.index') }}";
+
+                                }
+
+                            })
+
+                        }
+                        // console.log(response)
+                    }
+
+                })
 
             }
             // console.log('good');

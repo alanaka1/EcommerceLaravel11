@@ -9,6 +9,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'v
     Route::group(['prefix' => 'category', 'as' => 'category.', 'controller' => CategoryController::class], function() {
         Route::get('/', 'index')->name('index');
         Route::get('form', 'create')->name('create');
+        Route::any('form/store', 'store')->name('store');
 
 
     });
