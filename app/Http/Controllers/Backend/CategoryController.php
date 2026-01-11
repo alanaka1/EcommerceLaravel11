@@ -14,6 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        // $categories = Category::latest()->paginate(10);
         $categories = Category::get();
         return view('Ecommerce.Backend.Category.index', compact('categories'));
     }
