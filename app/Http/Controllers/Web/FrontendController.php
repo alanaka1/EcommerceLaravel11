@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Web;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\View\View;
+use App\Mail\ForgetPassword;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Mail\ForgetPassword;
 use Spatie\Permission\Models\{Role, Permission};
-use Illuminate\Support\Facades\{Auth, Hash, Session, Mail};
 use Illuminate\Mail\Mailables\{Address, Envelope};
+use Illuminate\Support\Facades\{Auth, Hash, Session, Mail};
 
 class FrontendController extends Controller
 {
@@ -30,8 +31,11 @@ class FrontendController extends Controller
 
         // $user->assignRole('user');
         // return $user;
+
+        $categories = Category::orderBy('order', 'ASC')->get();
+        // $categories = Category::orderBy('order', 'desc')->get();
         
-        return View('Ecommerce.Web.Template.index');
+        return View('Ecommerce.Web.Template.index', compact('categories'));
     }
 
     public function user_login(Request $request)

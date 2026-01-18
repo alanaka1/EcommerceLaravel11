@@ -80,11 +80,9 @@
                                             <i class="fas fa-chevron-down"></i>
                                             <ul class="custom_list clc">
                                                 <li><a class="clc" href="#">All Categories</a></li>
-                                                <li><a class="clc" href="#">Computers</a></li>
-                                                <li><a class="clc" href="#">Laptops</a></li>
-                                                <li><a class="clc" href="#">Cameras</a></li>
-                                                <li><a class="clc" href="#">Hardware</a></li>
-                                                <li><a class="clc" href="#">Smartphones</a></li>
+                                                @foreach($categories as $category)
+                                                <li><a class="clc" href="#">{{ $category->name }}</a></li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -145,9 +143,12 @@
                             </div>
 
                             <ul class="cat_menu">
+                                @foreach($categories as $category)
+                                    <li><a href="#">{{ $category->name }} <i class="fas fa-chevron-right ml-auto"></i></a></li>
+                                @endforeach
                                 <li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
                                 <li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-                                <li class="hassubs">
+                                <!-- <li class="hassubs">
                                     <a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
                                     <ul>
                                         <li class="hassubs">
@@ -164,12 +165,7 @@
                                         <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+                                <li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li> -->
                             </ul>
                         </div>
 
