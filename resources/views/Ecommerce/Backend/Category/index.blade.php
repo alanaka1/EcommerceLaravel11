@@ -38,7 +38,7 @@
                     <td>{{ $category->order }}</td>
                     <td>
                         <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-outline-success btn-sm" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="#" class="btn btn-outline-danger btn-sm" title="Delete"><i class="fa-solid fa-trash-can"></i></a>
+                        <a class="btn btn-outline-danger btn-sm delCate" title="Delete" cateID="{{ $category->id }}"><i class="fa-solid fa-trash-can"></i></a>
                         <a href="#" class="btn btn-outline-info btn-sm" title="Show"><i class="fa-solid fa-eye"></i></a>
                     </td>
                 </tr>
@@ -73,6 +73,57 @@
     //         // يمكنك إضافة أي إعدادات أخرى هنا
     //     });
     // });
+
+    $(document).ready(function(){
+
+        $('.delCate').click(function(e){
+
+            let id = $(this).attr("cateID");
+
+            Swal.fire({
+                title: 'Warning',
+                text: 'Do You Want To Delete This Category?',
+                icon: 'warning',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    
+                    $.ajax({
+
+                        method: 'post',
+                        url:'{{ route("admin.category.delete") }}',
+                        data: {
+                            id:id
+                        },
+
+                        headers: {
+
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+                        },
+
+                        success:function(response){
+
+                        if (response.data == 1) {
+
+                            window.location.reload();
+                            
+                        }
+                             
+                            console.log(response);
+
+                        }
+                    })
+
+                }
+
+            });
+
+            console.log(id);
+        });
+
+    });
 </script>
 
 @endsection
