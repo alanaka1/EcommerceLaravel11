@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $categories = Category::latest()->paginate(10);
-        $categories = Category::get();
+        $categories = Category::latest()->paginate(10);
+        // $categories = Category::get();
         return view('Ecommerce.Backend.Category.index', compact('categories'));
     }
 
@@ -72,17 +72,26 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($category)
     {
-        //
+        $category = Category::findOrFail($category);
+
+        return view('Ecommerce.Backend.Category.form', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request)
     {
-        //
+
+        $data = Category::where('id', '=', $request->id)->update([
+            'name' => strip_tags($request->name),
+            'order' => strip_tags($request->order),
+        ]);
+
+        return response()->json(['data' => $data]);
+        // return response()->json(['data' => $request->all()]);
     }
 
     /**

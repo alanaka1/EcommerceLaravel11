@@ -24,18 +24,20 @@
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
+                    <th>id</th>
                     <th>Name</th>
                     <th>Order</th>
-                    <th>Salary</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($categories as $category)
                 <tr>
+                    <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->order }}</td>
                     <td>
-                        <a href="#" class="btn btn-outline-success btn-sm" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-outline-success btn-sm" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="#" class="btn btn-outline-danger btn-sm" title="Delete"><i class="fa-solid fa-trash-can"></i></a>
                         <a href="#" class="btn btn-outline-info btn-sm" title="Show"><i class="fa-solid fa-eye"></i></a>
                     </td>
@@ -44,9 +46,10 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <th>id</th>
                     <th>Name</th>
                     <th>Order</th>
-                    <th>Salary</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>
@@ -58,9 +61,18 @@
 @section('javascript')
 
 <script>
-    $(document).ready(function(){
-        
-    });
+    // $(document).ready(function() {
+    //     // التأكد من حذف أي نسخة سابقة قبل التشغيل
+    //     if ($.fn.DataTable.isDataTable("#example")) {
+    //         $("#example").DataTable().destroy();
+    //     }
+
+    //     $("#example").DataTable({
+    //         "responsive": true, 
+    //         "autoWidth": false,
+    //         // يمكنك إضافة أي إعدادات أخرى هنا
+    //     });
+    // });
 </script>
 
 @endsection

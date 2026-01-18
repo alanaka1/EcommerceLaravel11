@@ -17,7 +17,8 @@
     <!-- <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css"> -->
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v7.0.1/css/all.css">
     <!-- Data Table CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.6/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/ltr/style.ltr.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/rtl/style.rtl.css') }}"> -->
@@ -50,7 +51,7 @@
 
 
     <!-- JQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script> -->
@@ -62,8 +63,9 @@
     <!-- Chart JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- DataTable JS -->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/2.3.6/js/dataTables.bootstrap5.js"></script>
     <script type="text/javascript" src="{{ asset('Backend/assets/js/style.js') }}"></script>
     <script type="text/javascript" src="{{ asset('Backend/assets/js/datatable-english.js') }}"></script>
     <!-- <script type="text/javascript" src="{{ asset('Backend/assets/js/datatable-arabic.js') }}"></script> -->

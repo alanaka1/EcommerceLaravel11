@@ -1,6 +1,8 @@
 @extends('Ecommerce.Backend.layout.app')
  
-@section('title', 'Category Form')
+@section('title')
+Category {{ isset($category) ? 'Update Form' : 'Create Form' }}
+@endsection
 
 @section('css')
 
@@ -13,7 +15,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Category</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                <li class="breadcrumb-item active" aria-current="page">Category {{ isset($category) ? 'Update Form' : 'Create Form' }}</li>
             </ol>
         </nav>
     </div>
@@ -25,24 +27,27 @@
     <!-- <form action="" method="post"> -->
 
         <div class="row row-cols-1 row-cols-md-2 g-4 mb-3">
-    
+        @isset($category)
+            <input type="hidden" id="id" value="{{ $category->id }}">
+        @endisset
+
             <div class="col">
                 <div class="card border-0">
                     <label for="category" class="form-label">Category Name</label>
-                    <input type="text" class="form-control" name="name" value="" id="name" placeholder="Category Name">
+                    <input type="text" class="form-control" name="name" value="{{ isset($category) ? $category->name : '' }}" id="name" placeholder="Category Name">
                 </div>
             </div>
             
             <div class="col">
                 <div class="card border-0">
                     <label for="order" class="form-label">Category Order</label>
-                    <input type="text" class="form-control" name="order" value="" id="order" placeholder="Category Order">
+                    <input type="text" class="form-control" name="order" value="{{ isset($category) ? $category->order : '' }}" id="order" placeholder="Category Order">
                 </div>
             </div>
         </div>
         
         <div class="mb-3">
-            <button type="submit" id="newCategory" class="btn btn-outline-primary">Category</button>
+            <button type="button" id="newCategory" class="btn btn-outline-primary">Category {{ isset($category) ? 'Update' : 'Create' }}</button>
         </div>
 
     <!-- </form> -->
@@ -52,79 +57,168 @@
  
 @section('javascript')
 
-<script>
-    $(document).ready(function(){
-        
-        $('#newCategory').click(function(e){
 
-            e.preventDefault();
-            let name = $('#name').val();
-            let order = $('#order').val();
 
-            if (name == '') {
+@isset($category)
+    
+    <script>
+        $(document).ready(function(){
             
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Please Write Category Name',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+            $('#newCategory').click(function(e){
 
-            } else {
+                e.preventDefault();
+                let name    = $('#name').val();
+                let order   = $('#order').val();
+                let id      = $('#id').val();
 
-                $.ajax({
+                if (name == '') {
+                
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please Write Category Name',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
 
-                    method: 'post',
-                    url: "{{ route('admin.category.store') }}",
-                    data: {
-                        name: name,
-                        order: order,
-                    },
+                } else {
 
-                    headers: {
+                    $.ajax({
 
-                        'X-CSRF-TOKEN': $('meta[name= "csrf-token"]').attr('content')
-                    },
+                        method: 'post',
+                        url: "{{ route('admin.category.update') }}",
+                        data: {
+                            name: name,
+                            order: order,
+                            id: id,
+                        },
 
-                    success: function(response) {
+                        headers: {
 
-                        if (response.data == 0) {
-                        
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'This Category Already Exists',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
 
-                        } else {
+                        success: function(response) {
 
-                            Swal.fire({
-                                title: 'Success',
-                                text: 'Category Added Success',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            }).then((result) => {
+                            // if (response.data == 0) {
+                            
+                            //     Swal.fire({
+                            //         title: 'Error!',
+                            //         text: 'This Category Already Exists',
+                            //         icon: 'error',
+                            //         confirmButtonText: 'OK'
+                            //     });
 
-                                if (result.isConfirmed) {
-                                    
-                                    // window.location.reload();
-                                    window.location.href = "{{ route('admin.category.index') }}";
+                            // } else
 
-                                }
+                             if (response.data == 1) {
 
-                            })
+                                    Swal.fire({
+                                        title: 'Success',
+                                        text: 'Category Updated Success',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
 
+                                        if (result.isConfirmed) {
+                                            
+                                            // window.location.reload();
+                                            window.location.href = "{{ route('admin.category.index') }}";
+
+                                        }
+
+                                })
+
+                            }
+                            console.log(response)
                         }
-                        // console.log(response)
-                    }
 
-                })
+                    })
 
-            }
-            // console.log('good');
+                }
+                // console.log('good');
+            });
         });
-    });
-</script>
+    </script>
+
+@else
+
+    <script>
+        $(document).ready(function(){
+            
+            $('#newCategory').click(function(e){
+
+                e.preventDefault();
+                let name = $('#name').val();
+                let order = $('#order').val();
+
+                if (name == '') {
+                
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please Write Category Name',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+
+                } else {
+
+                    $.ajax({
+
+                        method: 'post',
+                        url: "{{ route('admin.category.store') }}",
+                        data: {
+                            name: name,
+                            order: order,
+                        },
+
+                        headers: {
+
+                            'X-CSRF-TOKEN': $('meta[name= "csrf-token"]').attr('content')
+                        },
+
+                        success: function(response) {
+
+                            if (response.data == 0) {
+                            
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'This Category Already Exists',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+
+                            } else {
+
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: 'Category Added Success',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+
+                                    if (result.isConfirmed) {
+                                        
+                                        // window.location.reload();
+                                        window.location.href = "{{ route('admin.category.index') }}";
+
+                                    }
+
+                                })
+
+                            }
+                            // console.log(response)
+                        }
+
+                    })
+
+                }
+                // console.log('good');
+            });
+        });
+    </script>
+
+
+@endisset
+
 
 @endsection
