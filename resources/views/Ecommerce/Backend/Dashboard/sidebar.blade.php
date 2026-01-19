@@ -13,6 +13,7 @@
             <div class="card card-body">
               <ul class="list-group dropdown-dropdown-list">
                 <li class="list-group-item"><a class="text-white text-decoration-none" href="{{ route('admin.category.index') }}">Category</a></li>
+                <li class="list-group-item"><a class="text-white text-decoration-none" href="{{ route('admin.prodect.index') }}">Prodect</a></li>
                 <li class="list-group-item">A second item</li>
                 <li class="list-group-item">A third item</li>
                 <li class="list-group-item">A fourth item</li>

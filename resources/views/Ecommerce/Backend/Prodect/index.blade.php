@@ -1,6 +1,6 @@
 @extends('Ecommerce.Backend.layout.app')
  
-@section('title', 'Dashboard Bootstrap LTR RTL')
+@section('title', 'Prodect')
 
 @section('css')
 
@@ -12,14 +12,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                <li class="breadcrumb-item active" aria-current="page">Prodect</li>
             </ol>
         </nav>
     </div>
 
     <div class="data-table container">
         <div class="addPost m-3">
-            <a href="#" class="btn btn-outline-primary btn-sm" title="Add"><i class="fa-solid fa-circle-plus"></i></a>
+            <a href="{{ route('admin.prodect.create') }}" class="btn btn-outline-primary btn-sm" title="Add"><i class="fa-solid fa-circle-plus"></i></a>
         </div>
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
