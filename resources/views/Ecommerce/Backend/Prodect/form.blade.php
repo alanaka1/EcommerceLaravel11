@@ -28,8 +28,8 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Category: <span class="text-danger">*</span></label>
-                        <select class="form-select form-select-sm" name="category_id" aria-label="Default select example">
-                            <option selected>Category Select</option>
+                        <select class="form-select form-select-sm" name="category_id" id="category">
+                            <option value="">Category Select</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -58,12 +58,12 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="formFileSm" class="form-label">Image <span class="text-danger">*</span></label>
-                        <input class="form-control form-control-sm" name="" value="" id="formFileSm" type="file">
+                        <input class="form-control form-control-sm" name="img" value="" id="img" type="file">
                     </div>
                 </div>
     
             </div>
-            <button type="button" class="btn btn-outline-primary btn-sm">Save</button>
+            <button type="button" class="btn btn-outline-primary btn-sm addPro">Save</button>
         <!-- </form> -->
 
     </div>
@@ -72,5 +72,94 @@
 @endsection
  
 @section('javascript')
+
+<script> 
+    $(document).ready(function(e){
+
+        $('.addPro').click(function(e){
+
+            let category    = $('#category').val();
+            let name        = $('#name').val();
+            let oldPrice   = $('#old_price').val();
+            let newprice   = $('#new_price').val();
+            let img         = $('#img').prop('files')[0];
+
+            let formData = new FormData();
+            formData.append('category_id', category);
+            formData.append('name', name);
+            formData.append('old_price', oldPrice);
+            formData.append('new_price', newprice);
+            formData.append('img', img);
+
+            if (category == '') {
+                
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Select Product Category',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            } else if (name == '') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Select Product Name',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+
+            } else if (newprice == '') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Select Product Price',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+
+            } else if (!img) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Upload Product Image',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+
+            } else {
+                $.ajax({
+                    
+                    method: 'post',
+                    url: '{{ route("admin.prodect.store") }}',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    headers: {
+
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+
+                    success:function(response) {
+
+                        if (response.data == 1) {
+                            
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Prodect Store Success',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            })
+
+                        }
+
+                        window.location.href = "{{ route('admin.prodect.index') }}";
+
+
+                        console.log(response)
+                    }
+
+                })
+            }
+        });
+    });
+</script>
+
 
 @endsection

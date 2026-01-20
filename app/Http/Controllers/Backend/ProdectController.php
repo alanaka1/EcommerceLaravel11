@@ -30,8 +30,30 @@ class ProdectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category_id = $request->category_id;
+        $name = strip_tags($request->name);
+        $old_price = strip_tags($request->old_price);
+        $new_price = strip_tags($request->new_price);
+
+        $img = $request->file('img');
+        $gen = hexdec(uniqid());
+        $ex = strtolower($img->getClientOriginalExtension());
+        $name = $gen . '.' . $ex;
+        $location = 'Products/';
+        $source = $location.$name;
+        $img->move($location,$name);
+
+        $prodect = Prodect::create([
+            'category_id' => $category_id,
+            'name' => $name,
+            'old_price' => $old_price,
+            'new_price' => $new_price,
+            'img' => $source,
+        ]);
+
+        return response()->json(['data' => $prodect]);
     }
+  
 
     /**
      * Display the specified resource.
