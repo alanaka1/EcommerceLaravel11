@@ -24,36 +24,41 @@
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Old Price</th>
+                    <th>New Price</th>
+                    <th>Image</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($prudects as $prudect)
+
+                    @php($category = DB::table('categories')->where('id', '=', $prudect ->category)->first())
                 <tr>
-                    <td>Airi Satou</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>33</td>
-                    <td>2008/11/28</td>
+                    <td>{{ $prudect->id }}</td>
+                    <td>{{ $prudect->name }}</td>
+                    <td>{{ $prudect->old_price }}</td>
+                    <td>{{ $prudect->new_price }}</td>
+                    <td><a href="{{ asset($prudect->img) }}" target="_blank"><img src="{{ asset($prudect->img) }}" alt="" width="40"></a></td>
+
                     <td>
                         <a href="#" class="btn btn-outline-success btn-sm" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="#" class="btn btn-outline-danger btn-sm" title="Delete"><i class="fa-solid fa-trash-can"></i></a>
                         <a href="#" class="btn btn-outline-info btn-sm" title="Show"><i class="fa-solid fa-eye"></i></a>
                     </td>
                 </tr>
+                @endforeach 
             </tbody>
             <tfoot>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Old Price</th>
+                    <th>New Price</th>
+                    <th>Image</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>

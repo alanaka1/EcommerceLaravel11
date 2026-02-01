@@ -78,6 +78,7 @@
 
         $('.addPro').click(function(e){
 
+            e.preventDefault();
             let category    = $('#category').val();
             let name        = $('#name').val();
             let oldPrice   = $('#old_price').val();

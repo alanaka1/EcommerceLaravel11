@@ -13,7 +13,8 @@ class ProdectController extends Controller
      */
     public function index()
     {
-        return view('Ecommerce.Backend.Prodect.index');
+        $prudects = Prodect::orderBy('id', 'ASC')->get();
+        return view('Ecommerce.Backend.Prodect.index', compact('prudects'));
     }
 
     /**
@@ -21,7 +22,7 @@ class ProdectController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('order', 'ASC')->get();
+        $categories = Category::orderBy('id', 'ASC')->get();
         return view('Ecommerce.Backend.Prodect.form', compact('categories'));
     }
 
@@ -38,18 +39,33 @@ class ProdectController extends Controller
         $img = $request->file('img');
         $gen = hexdec(uniqid());
         $ex = strtolower($img->getClientOriginalExtension());
-        $name = $gen . '.' . $ex;
+        $name2 = $gen . '.' . $ex;
         $location = 'Products/';
-        $source = $location.$name;
-        $img->move($location,$name);
+        $source = $location.$name2;
+        $img->move($location,$name2);
 
         $prodect = Prodect::create([
-            'category_id' => $category_id,
-            'name' => $name,
-            'old_price' => $old_price,
-            'new_price' => $new_price,
-            'img' => $source,
+            'category_id'   => $category_id,
+            'name'          => $name,
+            'old_price'     => $old_price,
+            'new_price'     => $new_price,
+            'img'           => $source,
         ]);
+        
+        // الكود الأحترافي
+        // $img = $request->file('img');
+        // $name2 = uniqid() . '.' . $img->getClientOriginalExtension();
+        // $location = public_path('Products');
+        // $img->move($location, $name2);
+
+        // $prodect = Prodect::create([
+        //     'category_id' => $request->category_id,
+        //     'name'        => $request->name,
+        //     'old_price'   => $request->old_price,
+        //     'new_price'   => $request->new_price,
+        //     'img'         => 'Products/' . $name2,
+        // ]);
+
 
         return response()->json(['data' => $prodect]);
     }
