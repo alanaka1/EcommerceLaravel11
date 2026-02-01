@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'v
         Route::get('/', 'index')->name('index');
         Route::get('form', 'create')->name('create');
         Route::any('form/store', 'store')->name('store');
-        // Route::get('form/edit/{id}', 'edit')->name('edit');
+        Route::get('form/edit/{id}', 'edit')->name('edit');
         // Route::any('form/update', 'update')->name('update');
         // Route::any('form/delete', 'destroy')->name('delete');
     });

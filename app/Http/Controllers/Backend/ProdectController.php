@@ -82,9 +82,12 @@ class ProdectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Prodect $prodect)
+    public function edit($prodect)
     {
-        //
+        $prodect = Prodect::findOrFail($prodect);
+        // $categories = Category::where('id', '=', $prodect->category)->get();
+        $categories = Category::all();
+        return view('Ecommerce.Backend.Prodect.form', compact('categories', 'prodect'));
     }
 
     /**

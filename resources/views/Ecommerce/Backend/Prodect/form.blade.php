@@ -1,6 +1,8 @@
 @extends('Ecommerce.Backend.layout.app')
  
-@section('title', 'Prodect Form')
+@section('title')
+Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
+@endsection
 
 @section('css')
 
@@ -13,7 +15,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.prodect.index') }}">Prodect</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Form</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ isset($prodect) ? 'Upload' : 'Create' }}</li>
             </ol>
         </nav>
     </div>
@@ -39,19 +41,19 @@
                 <div class="col">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" name="name" value="" id="name" placeholder="Name">
+                        <input type="text" class="form-control form-control-sm" name="name" value="{{ isset($prodect) ? $prodect->name : '' }}" id="name" placeholder="Name">
                     </div>
                 </div>
                 <div class="col">
                     <div class="mb-3">
                         <label for="old_price" class="form-label">Old Price: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" name="old_price" value="" id="old_price" placeholder="Old Price">
+                        <input type="text" class="form-control form-control-sm" name="old_price" value="{{ isset($prodect) ? $prodect->old_price : '' }}" id="old_price" placeholder="Old Price">
                     </div>
                 </div>
                 <div class="col">
                     <div class="mb-3">
                         <label for="new_price" class="form-label">New Price <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" name="new_price" value="" id="new_price" placeholder="New Price">
+                        <input type="text" class="form-control form-control-sm" name="new_price" value="{{ isset($prodect) ? $prodect->new_price : '' }}" id="new_price" placeholder="New Price">
                     </div>
                 </div>
     
@@ -63,7 +65,7 @@
                 </div>
     
             </div>
-            <button type="button" class="btn btn-outline-primary btn-sm addPro">Save</button>
+            <button type="button" class="btn btn-outline-primary btn-sm addPro">{{ isset($prodect) ? 'Upload' : 'Create' }}</button>
         <!-- </form> -->
 
     </div>
@@ -72,6 +74,13 @@
 @endsection
  
 @section('javascript')
+
+@isset($prodect)
+
+
+
+
+@else
 
 <script> 
     $(document).ready(function(e){
@@ -161,6 +170,9 @@
         });
     });
 </script>
+
+@endisset
+
 
 
 @endsection
