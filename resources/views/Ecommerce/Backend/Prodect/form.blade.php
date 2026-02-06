@@ -166,7 +166,7 @@ Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
             }
         });
     });
-    </script>
+</script>
 
 
 @else
