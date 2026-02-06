@@ -93,8 +93,38 @@ class ProdectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prodect $prodect)
+    public function update(Request $request)
     {
+
+    $prodect = Prodect::findOrFail($request->id);
+
+    if ($request->hasFile('img')) {
+
+        if ($prodect->img && file_exists($prodect->img)) {
+            unlink($prodect->img);
+        }
+
+        $img = $request->file('img');
+        $gen = hexdec(uniqid());
+        $ex = strtolower($img->getClientOriginalExtension());
+        $name2 = $gen . '.' . $ex;
+        $location = 'Products/';
+        $source = $location . $name2;
+        $img->move($location, $name2);
+
+        $prodect->img = $source;
+    }
+
+    $prodect->category_id = $request->category_id;
+    $prodect->name        = strip_tags($request->name);
+    $prodect->old_price   = strip_tags($request->old_price);
+    $prodect->new_price   = strip_tags($request->new_price);
+
+    $prodect->save();
+
+    return response()->json(['data' => 1]);
+
+        // return response()->json(['data' => $request->all()]);
         //
     }
 
