@@ -35,8 +35,8 @@ Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
                         <label for="exampleFormControlInput1" class="form-label">Category: <span class="text-danger">*</span></label>
                         <select class="form-select form-select-sm" name="category_id" id="category">
                             <option value="">Category Select</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $prodect->category_id ?? '') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -59,15 +59,23 @@ Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
                         <input type="text" class="form-control form-control-sm" name="new_price" value="{{ isset($prodect) ? $prodect->new_price : '' }}" id="new_price" placeholder="New Price">
                     </div>
                 </div>
-    
+
+                
                 <div class="col">
                     <div class="mb-3">
                         <label for="formFileSm" class="form-label">Image <span class="text-danger">*</span></label>
                         <input class="form-control form-control-sm" name="img" value="" id="img" type="file">
                     </div>
                 </div>
-    
+                
+                
             </div>
+  
+            <div class="mb-3">
+                <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                <textarea class="form-control" name="description" id="description" rows="5" placeholder="Description">{{ isset($prodect) ? $prodect->description : '' }}</textarea>
+            </div>
+
             <button type="button" class="btn btn-outline-primary btn-sm {{ isset($prodect) ? 'editPro' : 'addPro' }}">{{ isset($prodect) ? 'Upload' : 'Create' }}</button>
         <!-- </form> -->
 
@@ -91,6 +99,7 @@ Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
             let oldPrice    = $('#old_price').val();
             let newprice    = $('#new_price').val();
             let id          = $('#id').val();
+            let description = $('#description').val();
             let formData    = new FormData();
             
             if ($('#img').prop('files')[0] != null) {
@@ -104,6 +113,7 @@ Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
             formData.append('name', name);
             formData.append('old_price', oldPrice);
             formData.append('new_price', newprice);
+            formData.append('description', description);
             formData.append('id', id);
 
             if (category == '') {
@@ -177,17 +187,19 @@ Prodect {{ isset($prodect) ? 'Upload' : 'Create' }}
         $('.addPro').click(function(e){
 
             e.preventDefault();
-            let category    = $('#category').val();
-            let name        = $('#name').val();
-            let oldPrice   = $('#old_price').val();
-            let newprice   = $('#new_price').val();
-            let img         = $('#img').prop('files')[0];
+            let category        = $('#category').val();
+            let name            = $('#name').val();
+            let oldPrice        = $('#old_price').val();
+            let newprice        = $('#new_price').val();
+            let description     = $('#description').val();
+            let img             = $('#img').prop('files')[0];
 
             let formData = new FormData();
             formData.append('category_id', category);
             formData.append('name', name);
             formData.append('old_price', oldPrice);
             formData.append('new_price', newprice);
+            formData.append('description', description);
             formData.append('img', img);
 
             if (category == '') {

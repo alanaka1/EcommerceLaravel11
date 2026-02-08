@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('old_price');
             $table->string('new_price');
             $table->string('img');
+            $table->text('description');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });

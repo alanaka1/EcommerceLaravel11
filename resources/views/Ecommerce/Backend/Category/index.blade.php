@@ -1,6 +1,6 @@
 @extends('Ecommerce.Backend.layout.app')
  
-@section('title', 'Category)
+@section('title', 'Category')
 
 @section('css')
 

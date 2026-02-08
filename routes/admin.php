@@ -21,6 +21,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'v
         Route::any('form/store', 'store')->name('store');
         Route::get('form/edit/{id}', 'edit')->name('edit');
         Route::any('form/update', 'update')->name('update');
-        // Route::any('form/delete', 'destroy')->name('delete');
+        Route::any('form/delete', 'destroy')->name('delete');
     });
 });

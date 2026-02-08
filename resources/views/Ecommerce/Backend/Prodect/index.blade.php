@@ -45,7 +45,7 @@
 
                     <td>
                         <a href="{{ route('admin.prodect.edit', $prudect->id) }}" class="btn btn-outline-success btn-sm" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="#" class="btn btn-outline-danger btn-sm" title="Delete"><i class="fa-solid fa-trash-can"></i></a>
+                        <a class="btn btn-outline-danger btn-sm prudectDelete" title="Delete" proId="{{ $prudect->id }}"><i class="fa-solid fa-trash-can"></i></a>
                         <a href="#" class="btn btn-outline-info btn-sm" title="Show"><i class="fa-solid fa-eye"></i></a>
                     </td>
                 </tr>
@@ -68,5 +68,47 @@
 @endsection
  
 @section('javascript')
+
+<script>
+
+$(document).ready(function(){
+
+    $('.prudectDelete').click(function(){
+
+        let id = $(this).attr('proId');
+
+        Swal.fire({
+            title: 'Warning',
+            text: 'Are You Sure Want Delete This Product?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route("admin.prodect.delete") }}',
+                    data: {
+                        id: id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(response){
+                        console.log(response);
+                        location.reload();
+                    }
+                });
+
+            }
+
+        });
+        // console.log(id);
+    });
+
+});
+</script>
 
 @endsection

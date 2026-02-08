@@ -32,9 +32,10 @@ class ProdectController extends Controller
     public function store(Request $request)
     {
         $category_id = $request->category_id;
-        $name = strip_tags($request->name);
-        $old_price = strip_tags($request->old_price);
-        $new_price = strip_tags($request->new_price);
+        $name           = strip_tags($request->name);
+        $old_price      = strip_tags($request->old_price);
+        $new_price      = strip_tags($request->new_price);
+        $description    = strip_tags($request->description);
 
         $img = $request->file('img');
         $gen = hexdec(uniqid());
@@ -49,6 +50,7 @@ class ProdectController extends Controller
             'name'          => $name,
             'old_price'     => $old_price,
             'new_price'     => $new_price,
+            'description'   => $description,
             'img'           => $source,
         ]);
         
@@ -119,6 +121,7 @@ class ProdectController extends Controller
     $prodect->name        = strip_tags($request->name);
     $prodect->old_price   = strip_tags($request->old_price);
     $prodect->new_price   = strip_tags($request->new_price);
+    $prodect->description = strip_tags($request->description);
 
     $prodect->save();
 
@@ -131,8 +134,23 @@ class ProdectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prodect $prodect)
+    public function destroy(Request $request)
     {
-        //
+        // جلب المنتج أولاً
+        $prodect = Prodect::find($request->id);
+        
+        if (!$prodect) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        // حذف الصورة إذا كانت موجودة
+        if (file_exists(public_path($prodect->img))) {
+            unlink(public_path($prodect->img));
+        }
+
+        // حذف المنتج من قاعدة البيانات
+        $prodect->delete();
+
+        return response()->json(['data' => 'Product deleted successfully']);
     }
 }
